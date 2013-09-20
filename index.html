@@ -1,0 +1,180 @@
+<html>
+<head>
+<link rel="stylesheet" href="grid.css" type="text/css"  />
+</head>
+
+<body>
+<button onClick=propagate()> Start Propagation </button>
+
+
+
+
+
+
+
+
+
+<script>
+
+var GRID_DIMENSION = 20;
+
+//var lastClicked;
+allClicked = [];
+
+
+// initializes empty grid 
+var initializeGrid = function() {
+gridArray =[]
+ for (var i=1;i<=GRID_DIMENSION;i++) {
+     gridArray[i] = [];
+  }
+  return gridArray;
+}
+
+
+// creates clickable grid
+var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION,function(el,row,col,i){
+    console.log("You clicked on element:",el);
+    console.log("You clicked on row:",row);
+    console.log("You clicked on col:",col);
+    console.log("You clicked on item #:",i);
+    console.log("AllClicked #:",allClicked);
+    for (var i=1; i<=GRID_DIMENSION; i++) {
+    console.log("gridArray #:",gridArray[i]);
+}
+    for (var i=1; i<=GRID_DIMENSION; i++) {
+    	for (var j=1; j<=GRID_DIMENSION; j++){
+    		console.log("neighbor ", GRID_DIMENSION*(i-1) + j + ":" + getNeighborCount(i, j) );
+    	}
+}
+	
+
+    el.className='clicked';
+    //if (lastClicked) lastClicked.className='';
+    //lastClicked = el;
+});
+
+
+
+document.body.appendChild(grid);
+     
+
+// creates clickable grid      
+function clickableGrid( rows, cols, callback ){
+    var i=0;
+    var grid = document.createElement('table');
+    var gridArray = initializeGrid();
+    grid.className = 'grid';
+    grid.id = 'myGrid';
+    for (var r=1;r<=rows;++r){
+        var tr = grid.appendChild(document.createElement('tr'));
+        for (var c=1;c<=cols;++c){
+            var cell = tr.appendChild(document.createElement('td'));
+            cell.innerHTML = ++i;
+            cell.innerValue = i;
+            gridArray[r][c]=false;
+            cell.addEventListener('click',(function(el,r,c,i){
+                return function(){
+                	allClicked.push(i);
+                	gridArray[r][c]=true;
+                    callback(el,r,c,i);
+                }
+            })(cell,r,c,i),false);
+        }
+    }
+    return grid;
+}
+
+function getNeighborCount(cellRow, cellColumn) {
+	count=0;
+
+	
+	if ((cellRow-1) >=1 && gridArray[cellRow-1][cellColumn] === true)  { count++;}
+	if ((cellRow-1) >=1 && (cellColumn-1) >=1 && gridArray[cellRow-1][cellColumn-1] === true)  { count++;}
+	if ((cellRow-1) >=1 && (cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow-1][cellColumn+1] === true)  { count++;}
+	if ((cellRow+1) <=GRID_DIMENSION && (cellColumn-1) >=1 && gridArray[cellRow+1][cellColumn-1] === true)  { count++;}
+	if ((cellRow+1) <=GRID_DIMENSION && gridArray[cellRow+1][cellColumn] === true)  { count++;}
+	if ((cellRow+1) <=GRID_DIMENSION && (cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow+1][cellColumn+1] === true)  { count++;}
+	if ((cellColumn-1) >=1 && gridArray[cellRow][cellColumn-1] === true)  { count++;}
+	if ((cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow][cellColumn+1] === true)  { count++;}
+
+	return count;
+	//console.log("Count is ", count);
+
+}
+
+function propagate(){
+
+nextStategridArray =[]
+ for (var i=1;i<=GRID_DIMENSION;i++) {
+     nextStategridArray[i] = [];
+  }
+
+	for (var i=1; i<=GRID_DIMENSION; i++) {
+    	for (var j=1; j<=GRID_DIMENSION; j++){
+    		if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
+    			 { nextStategridArray[i][j]=true; 
+    			//console.log(getNeighborCount(i, j));
+    			//console.log(gridArray[i][j]);
+    			//console.log("Found one alive");}
+                }
+    		else if (( getNeighborCount(i, j) === 3 ) && gridArray[i][j]===false )
+    			{ nextStategridArray[i][j]=true; 
+    			console.log(getNeighborCount(i, j));
+    		//console.log(gridArray[i][j]);
+//sole.log("Found one alive");} 
+}
+    		else 
+    			{ nextStategridArray[i][j]=false; 
+    		//console.log(getNeighborCount(i, j));
+    		//	console.log(gridArray[i][j]);
+    		//onsole.log("no one alive");} 
+                }
+    		}
+}
+
+
+    for (var i=1; i<=GRID_DIMENSION; i++) {
+    	
+   //	console.log("nextStategridArray #:",nextStategridArray[i]);
+    	
+	}
+
+		for (var i=1; i<=GRID_DIMENSION; i++) {
+    	for (var j=1; j<=GRID_DIMENSION; j++){
+    			gridArray[i][j]=nextStategridArray[i][j];
+    	}
+    }
+
+
+
+   var i=0;
+   //ar grid = document.createElement('table');
+   //rid.className = 'grid';
+   grid =document.getElementById('myGrid');
+    for (var r=1;r<=GRID_DIMENSION;r++){
+        var tr = grid.rows[r-1];
+        for (var c=1;c<=GRID_DIMENSION;c++){
+            var cell = tr.cells[c-1];
+            cell.innerHTML = ++i;
+            cell.innerValue = i;
+            cell.className ="";
+            if (gridArray[r][c]) 
+                {cell.className = 'clicked';
+     //     console.log("added click class")}
+ }
+            else 
+                {cell.className ="";
+       //   console.log("did not add click class")}
+   }
+        }
+    }
+     //setInterval(propagate(),5000);
+
+
+
+}
+</script>
+
+</body>
+</html>
