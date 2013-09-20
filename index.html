@@ -1,15 +1,28 @@
 <html>
 <head>
-<link rel="stylesheet" href="grid.css" type="text/css"  />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" href="grid.css" type="text/css"/>
 </head>
 
 <body>
 <button onClick=propagate()> Start Propagation </button>
+<ol>
+    <li>Pick Number of Cells</li>
+    <li>Pick starting position</li>
+    <li>click start</li>
+</ol>
 
 
 
+<div style="padding:16px;">
+    cells per side : <input type="text" id="txt_name" value="10"></input>
+</div>
+ 
 
+<button id="Set">Set Number of Cells</button> 
 
+ 
 
 
 
@@ -24,7 +37,7 @@ allClicked = [];
 
 // initializes empty grid 
 var initializeGrid = function() {
-gridArray =[]
+var gridArray =[]
  for (var i=1;i<=GRID_DIMENSION;i++) {
      gridArray[i] = [];
   }
@@ -86,49 +99,45 @@ var isWithinBounds = function(cellRow, cellColumn) {
 }
 
 
-var propagate =function(){
-
-nextStategridArray =[]
- for (var i=1;i<=GRID_DIMENSION;i++) {
-     nextStategridArray[i] = [];
-  }
-
-	for (var i=1; i<=GRID_DIMENSION; i++) {
-    	for (var j=1; j<=GRID_DIMENSION; j++){
-    		if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
-    			 { nextStategridArray[i][j]=true; 
-    			//console.log(getNeighborCount(i, j));
-    			//console.log(gridArray[i][j]);
-    			//console.log("Found one alive");}
-                }
-    		else if (( getNeighborCount(i, j) === 3 ) && gridArray[i][j]===false )
-    			{ nextStategridArray[i][j]=true; 
-    			console.log(getNeighborCount(i, j));
-    		//console.log(gridArray[i][j]);
-//sole.log("Found one alive");} 
-}
-    		else 
-    			{ nextStategridArray[i][j]=false; 
-    		//console.log(getNeighborCount(i, j));
-    		//	console.log(gridArray[i][j]);
-    		//onsole.log("no one alive");} 
-                }
-    		}
+var transition = function(gridArray, nextStategridArray){
+    for (var i=1; i<=GRID_DIMENSION; i++) {
+        for (var j=1; j<=GRID_DIMENSION; j++){
+                gridArray[i][j]=nextStategridArray[i][j];
+        }
+    }
 }
 
+var buildNextState = function(nextStategridArray){
 
     for (var i=1; i<=GRID_DIMENSION; i++) {
-    	
-   //	console.log("nextStategridArray #:",nextStategridArray[i]);
-    	
-	}
-
-		for (var i=1; i<=GRID_DIMENSION; i++) {
-    	for (var j=1; j<=GRID_DIMENSION; j++){
-    			gridArray[i][j]=nextStategridArray[i][j];
-    	}
+        for (var j=1; j<=GRID_DIMENSION; j++){
+            if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
+                { 
+                    nextStategridArray[i][j]=true; 
+                }
+            else if (( getNeighborCount(i, j) === 3 ) && gridArray[i][j]===false )
+                { 
+                    nextStategridArray[i][j]=true; 
+                    console.log(getNeighborCount(i, j));
+                }
+            else 
+                { 
+                    nextStategridArray[i][j]=false; 
+                }
+        }
     }
 
+return nextStategridArray;
+
+}
+
+
+var propagate =function(){
+
+  nextStategridArray = initializeGrid();
+  buildNextState(nextStategridArray);
+  transition(gridArray,nextStategridArray);
+  
 
 
    var i=0;
@@ -157,6 +166,16 @@ nextStategridArray =[]
 
 
 }
+
+ 
+ 
+    $("#Set").click(function () {
+ 
+    //$('input:text').val("ABC");
+    console.log($("#txt_name").val());
+ 
+    });
+ 
 </script>
 
 </body>
