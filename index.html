@@ -7,6 +7,7 @@
 
 <body>
 <button id="game_start"> Start Propagation </button>
+<button id="game_stop"> Stop Game </button>
 <ol>
     <li>Pick Number of Cells</li>
     <li>Pick starting position</li>
@@ -184,6 +185,11 @@ var startGame = function(grid_dimension) {
 
     $("#game_start").click(function () { 
         startGame(GRID_DIMENSION);
+    });
+
+      $("#game_stop").click(function () { 
+        document.getElementById("myGrid").remove();
+        
     })
     
  
