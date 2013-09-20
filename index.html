@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<button onClick=propagate()> Start Propagation </button>
+<button id="game_start"> Start Propagation </button>
 <ol>
     <li>Pick Number of Cells</li>
     <li>Pick starting position</li>
@@ -20,7 +20,7 @@
 </div>
  
 
-<button id="Set">Set Number of Cells</button> 
+<button id="Set">Create Board</button> 
 
  
 
@@ -44,14 +44,6 @@ var gridArray =[]
   return gridArray;
 }
 
-
-// creates clickable grid
-
-var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
-
-
-document.body.appendChild(grid);
-     
 
 // creates clickable grid      
 function clickableGrid( rows, cols ){
@@ -138,43 +130,62 @@ var propagate =function(){
   buildNextState(nextStategridArray);
   transition(gridArray,nextStategridArray);
   
-
-
    var i=0;
-   //ar grid = document.createElement('table');
-   //rid.className = 'grid';
-   grid =document.getElementById('myGrid');
-    for (var r=1;r<=GRID_DIMENSION;r++){
+   grid = document.getElementById('myGrid');
+    for (var r=1;r<=GRID_DIMENSION;r++)
+    {
         var tr = grid.rows[r-1];
-        for (var c=1;c<=GRID_DIMENSION;c++){
+        for (var c=1;c<=GRID_DIMENSION;c++)
+        {
             var cell = tr.cells[c-1];
             cell.innerHTML = ++i;
             cell.innerValue = i;
             cell.className ="";
             if (gridArray[r][c]) 
-                {cell.className = 'clicked';
-     //     console.log("added click class")}
- }
+                {
+                    cell.className = 'clicked';
+                    //console.log("added click class")}
+                }
             else 
-                {cell.className ="";
-       //   console.log("did not add click class")}
-   }
+                {
+                    cell.className ="";
+                    //console.log("did not add click class")}
+                }
         }
     }
-     //setInterval(propagate(),5000);
-
-
-
+     //setInterval(propagate(),2000);
+     //propagate();
 }
 
+var startGame = function(grid_dimension) {
+
+            setInterval(function() {          
+         propagate();
+          
+        }, 2000);  
+}
  
  
     $("#Set").click(function () {
  
     //$('input:text').val("ABC");
     console.log($("#txt_name").val());
+    GRID_DIMENSION = $("#txt_name").val();
+    var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
+    document.body.appendChild(grid)
+    //var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
+    //document.body.appendChild(grid)
+   // for (var i =0; i<10 ; i++ )
+    //{
+      //  propagate();
+   // }
  
     });
+
+    $("#game_start").click(function () { 
+        startGame(GRID_DIMENSION);
+    })
+    
  
 </script>
 
