@@ -33,37 +33,18 @@ gridArray =[]
 
 
 // creates clickable grid
-var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION,function(el,row,col,i){
-    console.log("You clicked on element:",el);
-    console.log("You clicked on row:",row);
-    console.log("You clicked on col:",col);
-    console.log("You clicked on item #:",i);
-    console.log("AllClicked #:",allClicked);
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-    console.log("gridArray #:",gridArray[i]);
-}
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-    	for (var j=1; j<=GRID_DIMENSION; j++){
-    		console.log("neighbor ", GRID_DIMENSION*(i-1) + j + ":" + getNeighborCount(i, j) );
-    	}
-}
-	
 
-    el.className='clicked';
-    //if (lastClicked) lastClicked.className='';
-    //lastClicked = el;
-});
-
+var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
 
 
 document.body.appendChild(grid);
      
 
 // creates clickable grid      
-function clickableGrid( rows, cols, callback ){
+function clickableGrid( rows, cols ){
     var i=0;
     var grid = document.createElement('table');
-    var gridArray = initializeGrid();
+    gridArray = initializeGrid();
     grid.className = 'grid';
     grid.id = 'myGrid';
     for (var r=1;r<=rows;++r){
@@ -77,7 +58,7 @@ function clickableGrid( rows, cols, callback ){
                 return function(){
                 	allClicked.push(i);
                 	gridArray[r][c]=true;
-                    callback(el,r,c,i);
+                    el.className='clicked';
                 }
             })(cell,r,c,i),false);
         }
@@ -85,25 +66,27 @@ function clickableGrid( rows, cols, callback ){
     return grid;
 }
 
-function getNeighborCount(cellRow, cellColumn) {
-	count=0;
 
-	
-	if ((cellRow-1) >=1 && gridArray[cellRow-1][cellColumn] === true)  { count++;}
-	if ((cellRow-1) >=1 && (cellColumn-1) >=1 && gridArray[cellRow-1][cellColumn-1] === true)  { count++;}
-	if ((cellRow-1) >=1 && (cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow-1][cellColumn+1] === true)  { count++;}
-	if ((cellRow+1) <=GRID_DIMENSION && (cellColumn-1) >=1 && gridArray[cellRow+1][cellColumn-1] === true)  { count++;}
-	if ((cellRow+1) <=GRID_DIMENSION && gridArray[cellRow+1][cellColumn] === true)  { count++;}
-	if ((cellRow+1) <=GRID_DIMENSION && (cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow+1][cellColumn+1] === true)  { count++;}
-	if ((cellColumn-1) >=1 && gridArray[cellRow][cellColumn-1] === true)  { count++;}
-	if ((cellColumn+1) <=GRID_DIMENSION && gridArray[cellRow][cellColumn+1] === true)  { count++;}
+var getNeighborCount  = function(cellRow, cellColumn) {
+    count=0;
+    for ( var i=-1; i<= 1; i++) {
+        for ( var j=-1; j<= 1; j++){
+            if (!(i===0 && j===i) && isWithinBounds(cellRow+i, cellColumn+j) && gridArray[cellRow+i][cellColumn+j])
+                count++;
+        }
+    }
 
-	return count;
-	//console.log("Count is ", count);
-
+    return count;
+    console.log("Count is ", count);
 }
 
-function propagate(){
+
+var isWithinBounds = function(cellRow, cellColumn) {
+    return  ( (cellRow >= 1 && cellRow <= GRID_DIMENSION) && (cellColumn >= 1 && cellColumn <= GRID_DIMENSION) )
+}
+
+
+var propagate =function(){
 
 nextStategridArray =[]
  for (var i=1;i<=GRID_DIMENSION;i++) {
