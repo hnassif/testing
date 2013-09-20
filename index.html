@@ -30,6 +30,7 @@
 
 <script>
 
+var callBackVariable ;
 var GRID_DIMENSION = 20;
 
 //var lastClicked;
@@ -160,7 +161,7 @@ var propagate =function(){
 
 var startGame = function(grid_dimension) {
 
-            setInterval(function() {          
+         callBackVariable = setInterval(function() {          
          propagate();
           
         }, 2000);  
@@ -188,7 +189,9 @@ var startGame = function(grid_dimension) {
     });
 
       $("#game_stop").click(function () { 
+        clearInterval(callBackVariable);
         document.getElementById("myGrid").remove();
+
         
     })
     
