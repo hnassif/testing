@@ -2,6 +2,7 @@
 <head>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="grid.js" type="text/javascript"></script>
 <link rel="stylesheet" href="grid.css" type="text/css"/>
 </head>
 
@@ -37,141 +38,14 @@ var GRID_DIMENSION = 20;
 allClicked = [];
 
 
-// initializes empty grid 
-var initializeGrid = function() {
-var gridArray =[]
- for (var i=1;i<=GRID_DIMENSION;i++) {
-     gridArray[i] = [];
-  }
-  return gridArray;
-}
 
-
-// creates clickable grid      
-function clickableGrid( rows, cols ){
-    var i=0;
-    var grid = document.createElement('table');
-    gridArray = initializeGrid();
-    grid.className = 'grid';
-    grid.id = 'myGrid';
-    for (var r=1;r<=rows;++r){
-        var tr = grid.appendChild(document.createElement('tr'));
-        for (var c=1;c<=cols;++c){
-            var cell = tr.appendChild(document.createElement('td'));
-            cell.innerHTML = ++i;
-            cell.innerValue = i;
-            gridArray[r][c]=false;
-            cell.addEventListener('click',(function(el,r,c,i){
-                return function(){
-                	allClicked.push(i);
-                	gridArray[r][c]=true;
-                    el.className='clicked';
-                }
-            })(cell,r,c,i),false);
-        }
-    }
-    return grid;
-}
-
-
-var getNeighborCount  = function(cellRow, cellColumn) {
-    count=0;
-    for ( var i=-1; i<= 1; i++) {
-        for ( var j=-1; j<= 1; j++){
-            if (!(i===0 && j===i) && isWithinBounds(cellRow+i, cellColumn+j) && gridArray[cellRow+i][cellColumn+j])
-                count++;
-        }
-    }
-
-    return count;
-    console.log("Count is ", count);
-}
-
-
-var isWithinBounds = function(cellRow, cellColumn) {
-    return  ( (cellRow >= 1 && cellRow <= GRID_DIMENSION) && (cellColumn >= 1 && cellColumn <= GRID_DIMENSION) )
-}
-
-
-var transition = function(gridArray, nextStategridArray){
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-        for (var j=1; j<=GRID_DIMENSION; j++){
-                gridArray[i][j]=nextStategridArray[i][j];
-        }
-    }
-}
-
-var buildNextState = function(nextStategridArray){
-
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-        for (var j=1; j<=GRID_DIMENSION; j++){
-            if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
-                { 
-                    nextStategridArray[i][j]=true; 
-                }
-            else if (( getNeighborCount(i, j) === 3 ) && gridArray[i][j]===false )
-                { 
-                    nextStategridArray[i][j]=true; 
-                    console.log(getNeighborCount(i, j));
-                }
-            else 
-                { 
-                    nextStategridArray[i][j]=false; 
-                }
-        }
-    }
-
-return nextStategridArray;
-
-}
-
-
-var propagate =function(){
-
-  nextStategridArray = initializeGrid();
-  buildNextState(nextStategridArray);
-  transition(gridArray,nextStategridArray);
-  
-   var i=0;
-   grid = document.getElementById('myGrid');
-    for (var r=1;r<=GRID_DIMENSION;r++)
-    {
-        var tr = grid.rows[r-1];
-        for (var c=1;c<=GRID_DIMENSION;c++)
-        {
-            var cell = tr.cells[c-1];
-            cell.innerHTML = ++i;
-            cell.innerValue = i;
-            cell.className ="";
-            if (gridArray[r][c]) 
-                {
-                    cell.className = 'clicked';
-                    //console.log("added click class")}
-                }
-            else 
-                {
-                    cell.className ="";
-                    //console.log("did not add click class")}
-                }
-        }
-    }
-     //setInterval(propagate(),2000);
-     //propagate();
-}
-
-var startGame = function(grid_dimension) {
-
-         callBackVariable = setInterval(function() {          
-         propagate();
-          
-        }, 2000);  
-}
  
  
     $("#Set").click(function () {
  
     //$('input:text').val("ABC");
     console.log($("#txt_name").val());
+   
     GRID_DIMENSION = $("#txt_name").val();
     var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
     document.body.appendChild(grid)
