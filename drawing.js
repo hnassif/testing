@@ -2,7 +2,7 @@
 var clickableGrid = function(rows, cols ){
     var i=0
     var grid = document.createElement('table');
-    gridArray = initializeGrid(rows, cols);
+    initializeGrid(rows, cols);
     grid.className = 'grid';
     grid.id = 'myGrid';
     for (var r=1;r<=rows;++r){
@@ -15,7 +15,8 @@ var clickableGrid = function(rows, cols ){
             cell.addEventListener('click',(function(el,r,c,i){
                 return function(){
                 	allClicked.push(i);
-                	gridArray[r][c]=true;
+                	//gridArray[r][c]=true;
+                    setCell(r,c,true);
                     el.className='clicked';
                 }
             })(cell,r,c,i),false);

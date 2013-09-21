@@ -1,8 +1,10 @@
 
 
+var gridArray =[]
+
 // creates and initializes empty grid 
 var initializeGrid = function(rows, cols) {
-var gridArray =[]
+
  for (var i=1;i<=GRID_DIMENSION;i++) {
      gridArray[i] = [];
   }
@@ -12,7 +14,7 @@ var gridArray =[]
     }
  } 
 
-  return gridArray;
+  
 }
 // counts the active neighbors of a specific cell
 var getNeighborCount  = function(cellRow, cellColumn) { //use foreach instead
@@ -44,8 +46,11 @@ var transition = function(gridArray, nextStateGridArray){
 
 
 // computes the next state of the grid and stores it in nextStateGridArray
-var buildNextState = function(nextStateGridArray){
-
+var buildNextState = function(){
+   var nextStateGridArray = [];
+  for (var i=1;i<=GRID_DIMENSION;i++) {
+     nextStateGridArray[i] = [];
+  }
     for (var i=1; i<=GRID_DIMENSION; i++) {
         for (var j=1; j<=GRID_DIMENSION; j++){
             if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
@@ -73,11 +78,15 @@ var isAlive = function(cellRow, cellCol){
     return (gridArray[cellRow][cellCol] === true)
 }
 
+var setCell = function(cellRow, cellCol, value){
+    gridArray[cellRow][cellCol] = true
+}
+
 var propagate =function(){
 
-  nextStateGridArray = initializeGrid();
-  buildNextState(nextStateGridArray);
-  transition(gridArray,nextStateGridArray);
+  //initializeGrid();
+  //buildNextState(nextStateGridArray);
+  transition(gridArray,buildNextState());
   
   drawNextState();
 
@@ -92,14 +101,13 @@ var startGame = function(grid_dimension) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
