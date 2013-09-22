@@ -1,26 +1,21 @@
 
+var makeBoard = function() { //call board 
+
 
 var gridArray =[]
 
-// creates and initializes empty grid 
-var initializeGrid = function(rows, cols) {
 
- for (var i=1;i<=GRID_DIMENSION;i++) {
-     gridArray[i] = [];
-  }
- for (var r=1; r <= rows ; ++r){
-    for (var c=1; c<=cols; c++){
-       gridArray[r][c]=false;
-    }
- } 
 
   
-}
+
 // counts the active neighbors of a specific cell
-var getNeighborCount  = function(cellRow, cellColumn) { //use foreach instead
+var getNeighborCount  = function(cellRow, cellColumn) 
+{ //use foreach instead
     count=0;
-    for ( var i=-1; i<= 1; i++) {
-        for ( var j=-1; j<= 1; j++){
+    for ( var i=-1; i<= 1; i++) 
+    {
+        for ( var j=-1; j<= 1; j++)
+        {
             if (!(i===0 && j===i) && isWithinBounds(cellRow+i, cellColumn+j) && gridArray[cellRow+i][cellColumn+j])
                 count++;
         }
@@ -31,14 +26,18 @@ var getNeighborCount  = function(cellRow, cellColumn) { //use foreach instead
 }
 
 // checks is a specific location is within borders
-var isWithinBounds = function(cellRow, cellColumn) {
+var isWithinBounds = function(cellRow, cellColumn) 
+{
     return  ( (cellRow >= 1 && cellRow <= GRID_DIMENSION) && (cellColumn >= 1 && cellColumn <= GRID_DIMENSION) )
 }
 
 // sets current current State = Next State
-var transition = function(gridArray, nextStateGridArray){
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-        for (var j=1; j<=GRID_DIMENSION; j++){
+var transition = function(gridArray, nextStateGridArray)
+{
+    for (var i=1; i<=GRID_DIMENSION; i++) 
+    {
+        for (var j=1; j<=GRID_DIMENSION; j++)
+        {
                 gridArray[i][j]=nextStateGridArray[i][j];
         }
     }
@@ -46,13 +45,17 @@ var transition = function(gridArray, nextStateGridArray){
 
 
 // computes the next state of the grid and stores it in nextStateGridArray
-var buildNextState = function(){
+var buildNextState = function()
+{
    var nextStateGridArray = [];
-  for (var i=1;i<=GRID_DIMENSION;i++) {
+  for (var i=1;i<=GRID_DIMENSION;i++) 
+  {
      nextStateGridArray[i] = [];
   }
-    for (var i=1; i<=GRID_DIMENSION; i++) {
-        for (var j=1; j<=GRID_DIMENSION; j++){
+    for (var i=1; i<=GRID_DIMENSION; i++) 
+    {
+        for (var j=1; j<=GRID_DIMENSION; j++)
+        {
             if (( (getNeighborCount(i, j) === 3) || (getNeighborCount(i, j) === 2)) && gridArray[i][j] === true )
                 { 
                     nextStateGridArray[i][j]=true; 
@@ -74,15 +77,10 @@ return nextStateGridArray;
 }
 
 
-var isAlive = function(cellRow, cellCol){
-    return (gridArray[cellRow][cellCol] === true)
-}
 
-var setCell = function(cellRow, cellCol, value){
-    gridArray[cellRow][cellCol] = true
-}
 
-var propagate =function(){
+var propagate =function()
+{
 
   //initializeGrid();
   //buildNextState(nextStateGridArray);
@@ -92,19 +90,56 @@ var propagate =function(){
 
 }
 
-var startGame = function(grid_dimension) {
-
-         callBackVariable = setInterval(function() {          
-         propagate();
-          
-        }, 2000);  
+return {
 
 
+            // creates and initializes empty grid 
+            initializeGrid: function(rows, cols) 
+            {
+
+                 //for (var i=1;i<=GRID_DIMENSION;i++) 
+                 //{
+                  //   gridArray[i] = [];
+                  //}
+                 for (var r=1; r <= rows ; r++)
+                 {  
+                    gridArray[r] = [];
+                    for (var c=1; c<=cols; c++)
+                    {
+                       gridArray[r][c]=false;
+                    }
+                 } 
+            },
+            isAlive: function(cellRow, cellCol)
+            {
+                return (gridArray[cellRow][cellCol] === true)
+            },
+
+            setCell: function(cellRow, cellCol, value)
+            {
+                gridArray[cellRow][cellCol] = true
+            },
+
+            startGame: function(grid_dimension) 
+            {
+
+                     callBackVariable = setInterval(function() {          
+                     propagate();
+                      
+                    }, 2000);  
+
+            },
+
+            stopGame: function()
+            {
+                clearInterval(callBackVariable);
+                document.getElementById("myGrid").remove();
+            }
 
 }
 
 
-
+}
 
 
 

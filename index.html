@@ -47,8 +47,13 @@ var allClicked = [];
     console.log($("#txt_name").val());
    
     GRID_DIMENSION = $("#txt_name").val();
-    var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
+
+    game = makeBoard();
+
+    var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION, game);
     document.body.appendChild(grid)
+
+
     //var grid = clickableGrid(GRID_DIMENSION,GRID_DIMENSION);
     //document.body.appendChild(grid)
    // for (var i =0; i<10 ; i++ )
@@ -59,14 +64,11 @@ var allClicked = [];
     });
 
     $("#game_start").click(function () { 
-        startGame(GRID_DIMENSION);
+        game.startGame(GRID_DIMENSION);
     });
 
       $("#game_stop").click(function () { 
-        clearInterval(callBackVariable);
-        document.getElementById("myGrid").remove();
-
-        
+        game.stopGame();      
     })
     
  

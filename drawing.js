@@ -1,8 +1,8 @@
 // creates clickable grid      
-var clickableGrid = function(rows, cols ){
+var clickableGrid = function(rows, cols, game ){
     var i=0
     var grid = document.createElement('table');
-    initializeGrid(rows, cols);
+    game.initializeGrid(rows, cols);
     grid.className = 'grid';
     grid.id = 'myGrid';
     for (var r=1;r<=rows;++r){
@@ -16,7 +16,7 @@ var clickableGrid = function(rows, cols ){
                 return function(){
                 	allClicked.push(i);
                 	//gridArray[r][c]=true;
-                    setCell(r,c,true);
+                    game.setCell(r,c,true);
                     el.className='clicked';
                 }
             })(cell,r,c,i),false);
@@ -39,7 +39,7 @@ var drawNextState = function() {
             cell.innerHTML = ++i;
             cell.innerValue = i;
             cell.className ="";
-            if (isAlive(r,c)) 
+            if (game.isAlive(r,c)) 
                 {
                     cell.className = 'clicked';
                     //console.log("added click class")}
