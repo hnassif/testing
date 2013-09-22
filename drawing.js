@@ -1,4 +1,3 @@
-
 // creates clickable grid      
 var clickableGrid = function(rows, cols, game )
 {
@@ -27,11 +26,11 @@ var clickableGrid = function(rows, cols, game )
         }
     }
     document.body.appendChild(grid);
-}
+
     
+return {
 
-
-var drawNextState = function() 
+drawNextState: function() 
 {
    var i =0;
    grid = document.getElementById('myGrid');
@@ -61,10 +60,10 @@ var drawNextState = function()
 
 
 
+}
 
 
-
-
+}
 
 
 

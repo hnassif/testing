@@ -79,16 +79,7 @@ return nextStateGridArray;
 
 
 
-var propagate =function()
-{
 
-  //initializeGrid();
-  //buildNextState(nextStateGridArray);
-  transition(gridArray,buildNextState());
-  
-  drawNextState();
-
-}
 
 return {
 
@@ -116,11 +107,18 @@ return {
                 gridArray[cellRow][cellCol] = true
             },
 
+            propagate: function()
+            {
+
+                transition(gridArray,buildNextState());
+
+            },
+
             startGame: function(grid_dimension) 
             {
 
                      callBackVariable = setInterval(function() {          
-                     propagate();
+                     step();
                       
                     }, 2000);  
 
@@ -130,7 +128,9 @@ return {
             {
                 clearInterval(callBackVariable);
                 document.getElementById("myGrid").remove();
-            }
+            },
+
+
 
 }
 
