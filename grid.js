@@ -1,5 +1,7 @@
+//This is the model 
 
-var makeBoard = function(GRID_DIMENSION) { //call board 
+// creates an instance of the model and returns an object with methods on the model
+var makeBoard = function(GRID_DIMENSION) { 
 
 
 var gridArray =[]
@@ -10,7 +12,7 @@ var gridArray =[]
 
 // counts the active neighbors of a specific cell
 var getNeighborCount  = function(cellRow, cellColumn) 
-{ //use foreach instead
+{ 
     count=0;
     for ( var i=-1; i<= 1; i++) 
     {
@@ -25,11 +27,13 @@ var getNeighborCount  = function(cellRow, cellColumn)
     console.log("Count is ", count);
 }
 
+
 // checks is a specific location is within borders
 var isWithinBounds = function(cellRow, cellColumn) 
 {
     return  ( (cellRow >= 1 && cellRow <= GRID_DIMENSION) && (cellColumn >= 1 && cellColumn <= GRID_DIMENSION) )
 }
+
 
 // sets current current State = Next State
 var transition = function(gridArray, nextStateGridArray)
@@ -84,7 +88,7 @@ return nextStateGridArray;
 return {
 
 
-            // creates and initializes empty grid 
+            // creates and initializes empty grid by setting all entries to false
             initializeGrid: function(rows, cols) 
             {
                  for (var r=1; r <= rows ; r++)
@@ -97,16 +101,19 @@ return {
                  } 
             },
 
+            // checks if a given cell is alive 
             isAlive: function(cellRow, cellCol)
             {
                 return (gridArray[cellRow][cellCol] === true)
             },
 
+            // sets the state of the specified cell to the boolean value specified in value 
             setCell: function(cellRow, cellCol, value)
             {
                 gridArray[cellRow][cellCol] = true
             },
 
+            // computes next state and updates current state 
             propagate: function()
             {
 
@@ -114,6 +121,7 @@ return {
 
             },
 
+            // starts an instance of the game by initiating callback
             startGame: function(grid_dimension) 
             {
 
@@ -124,6 +132,7 @@ return {
 
             },
 
+            // ctops the running instance of the game 
             stopGame: function()
             {
                 clearInterval(callBackVariable);

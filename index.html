@@ -15,12 +15,12 @@
 </head>
 
 <body>
-<button id="game_start"> Start Propagation </button>
-<button id="game_stop"> Stop Game </button>
+
 <ol>
     <li>Pick Number of Cells</li>
     <li>Pick starting position</li>
     <li>click start</li>
+    N.B: You can also click on a cell at any stage of the game and the game will be updated
 </ol>
 
 
@@ -31,7 +31,8 @@
  
 
 <button id="Set">Create Board</button> 
-
+<button id="game_start"> Start Propagation </button>
+<button id="game_stop"> Stop Game </button>
  
 
 
@@ -39,32 +40,28 @@
 
 <script>
 
-//var callBackVariable ;
 var GRID_DIMENSION = 20;
-
 var allClicked = [];
+var game;
+var board;
 
 
- 
- 
-    $("#Set").click(function () {
- 
-        console.log($("#txt_name").val());
-
+$("#Set").click(function () {
         GRID_DIMENSION = $("#txt_name").val();
         game = makeBoard(GRID_DIMENSION);
+        game.initializeGrid(GRID_DIMENSION, GRID_DIMENSION);
         board = clickableGrid(GRID_DIMENSION,GRID_DIMENSION, game);
-        //document.body.appendChild(grid);
+        
  
-    });
+});
 
-    $("#game_start").click(function () { 
+$("#game_start").click(function () { 
         game.startGame(GRID_DIMENSION);
-    });
+});
 
-      $("#game_stop").click(function () { 
+$("#game_stop").click(function () { 
         game.stopGame();      
-    })
+})
     
  
 </script>
