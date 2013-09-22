@@ -1,33 +1,38 @@
+
 // creates clickable grid      
-var clickableGrid = function(rows, cols, game ){
+var clickableGrid = function(rows, cols, game )
+{
     var i=0
     var grid = document.createElement('table');
     game.initializeGrid(rows, cols);
     grid.className = 'grid';
     grid.id = 'myGrid';
-    for (var r=1;r<=rows;++r){
+    for (var r=1;r<=rows;++r)
+    {
         var tr = grid.appendChild(document.createElement('tr'));
-        for (var c=1;c<=cols;++c){
+        for (var c=1;c<=cols;++c)
+        {
             var cell = tr.appendChild(document.createElement('td'));
             cell.innerHTML = ++i;
             cell.innerValue = i;
-            //gridArray[r][c]=false; // remove 
-            cell.addEventListener('click',(function(el,r,c,i){
-                return function(){
+            cell.addEventListener('click',(function(el,r,c,i)
+            {
+                return function()
+                {
                 	allClicked.push(i);
-                	//gridArray[r][c]=true;
                     game.setCell(r,c,true);
                     el.className='clicked';
                 }
             })(cell,r,c,i),false);
         }
     }
-    return grid;
+    document.body.appendChild(grid);
 }
+    
 
 
-
-var drawNextState = function() {
+var drawNextState = function() 
+{
    var i =0;
    grid = document.getElementById('myGrid');
     for (var r=1;r<=GRID_DIMENSION;r++)
@@ -51,6 +56,19 @@ var drawNextState = function() {
                 }
         }
     }
-     //setInterval(propagate(),2000);
-     //propagate();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+

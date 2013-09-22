@@ -1,5 +1,5 @@
 
-var makeBoard = function() { //call board 
+var makeBoard = function(GRID_DIMENSION) { //call board 
 
 
 var gridArray =[]
@@ -47,7 +47,7 @@ var transition = function(gridArray, nextStateGridArray)
 // computes the next state of the grid and stores it in nextStateGridArray
 var buildNextState = function()
 {
-   var nextStateGridArray = [];
+  var nextStateGridArray = [];
   for (var i=1;i<=GRID_DIMENSION;i++) 
   {
      nextStateGridArray[i] = [];
@@ -96,11 +96,6 @@ return {
             // creates and initializes empty grid 
             initializeGrid: function(rows, cols) 
             {
-
-                 //for (var i=1;i<=GRID_DIMENSION;i++) 
-                 //{
-                  //   gridArray[i] = [];
-                  //}
                  for (var r=1; r <= rows ; r++)
                  {  
                     gridArray[r] = [];
@@ -110,6 +105,7 @@ return {
                     }
                  } 
             },
+
             isAlive: function(cellRow, cellCol)
             {
                 return (gridArray[cellRow][cellCol] === true)
