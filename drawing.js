@@ -1,12 +1,11 @@
-// This module handles all the DOM manipulation
+// This module handles manipulating the DOM
 
 
-//creates a clickableGrid , given the numbe rof rows, col, and an instance of the game 
+//creates a clickableGrid , given the number of rows, col, and an instance of the game 
 var clickableGrid = function(rows, cols, game )
 {
     var i=0
     var grid = document.createElement('table');
-    //game.initializeGrid(rows, cols);
     grid.className = 'grid';
     grid.id = 'myGrid';
     for (var r=1;r<=rows;++r)

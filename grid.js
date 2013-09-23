@@ -1,6 +1,6 @@
 //This is the model 
 
-// creates an instance of the model and returns an object with methods on the model
+// creates an instance of the model 
 var makeBoard = function(GRID_DIMENSION) { 
 
 
@@ -24,7 +24,7 @@ var getNeighborCount  = function(cellRow, cellColumn)
     }
 
     return count;
-    console.log("Count is ", count);
+    
 }
 
 
@@ -67,7 +67,7 @@ var buildNextState = function()
             else if (( getNeighborCount(i, j) === 3 ) && gridArray[i][j]===false )
                 { 
                     nextStateGridArray[i][j]=true; 
-                    console.log(getNeighborCount(i, j));
+                    
                 }
             else 
                 { 

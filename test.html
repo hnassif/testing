@@ -24,12 +24,6 @@
 
 
 
-
- 
-
-
-
-
 <script>
 
 var testGame;
@@ -53,8 +47,18 @@ test( "Test stepping through game ", function() {
  testGame.setCell(7,6,true);
  testGame.setCell(7,7,true);
   testGame.propagate();
-  ok(testGame.isAlive(8,6) === true, "isAlive()" );
-  ok(testGame.isAlive(6,6) === true, "isAlive()" );
+  ok(testGame.isAlive(8,6) === true, "isAlive() after first step" );
+  ok(testGame.isAlive(6,6) === true, "isAlive() after first step" );
+  ok(testGame.isAlive(7,6) === true, "isAlive() after first step" );
+  ok(testGame.isAlive(7,5) === false, "isAlive() after first step" );
+  ok(testGame.isAlive(7,7) === false, "isAlive() after first step" );
+  testGame.propagate();
+    ok(testGame.isAlive(7,5) === true, "isAlive() after second step" );
+  ok(testGame.isAlive(7,6) === true, "isAlive() after second step" );
+  ok(testGame.isAlive(7,7) === true, "isAlive() after second step" );
+    ok(testGame.isAlive(8,6) === false, "isAlive() after second step" );
+  ok(testGame.isAlive(6,6) === false, "isAlive() after second step" );
+  
   
 });
 
